@@ -18,6 +18,7 @@ $(document).ready(function () {
   function loadExpenses() {
     let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
     expenses = ensureExpenseIds(expenses);
+
     $('#expense-cards-container').empty();
     expenses.forEach(expense => {
       appendExpenseCard(expense);
@@ -31,7 +32,7 @@ $(document).ready(function () {
         <div class="card expense-card" data-id="${expense.id}">
           <div class="card-body">
             <h5 class="card-title">${expense.title}</h5>
-            <p class="card-text">Amount: $${parseFloat(expense.amount).toFixed(2)} | Date: ${expense.date}</p>
+            <p class="card-text">Amount: $${parseFloat(expense.amount).toFixed(2)} | Date: ${expense.date} | Category: ${expense.category}</p>
             <a href="#" class="more-info text-decoration-underline">More Info</a>
             <div class="more-details mt-2" style="display:none;">
               <hr>
@@ -130,4 +131,34 @@ $(document).ready(function () {
 
   // load expenses when the page loads
   loadExpenses();
+
+
+  // event listener for search bar
+  document.getElementById('expense-search-form').addEventListener('submit', function(e){
+    e.preventDefault(); 
+
+    // store user input
+    const input = document.getElementById('search-title').value.trim().toLowerCase();
+    const selectedCategory = document.getElementById('search-category').value;
+    const startDate = document.getElementById('start-date').value;
+    const endDate = document.getElementById('end-date').value;
+
+    let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+
+    // match id with user search
+    const matchedExpenses = expenses.filter(expense => 
+      expense.title.toLowerCase().includes(input) && (selectedCategory === expense.category)
+      && (!startDate || new Date(expense.date) >= new Date(startDate)) 
+      && (!endDate || new Date(expense.date) <= new Date(endDate))
+    );
+
+    // clear the expenses container and load only the ones that match the user input
+    $('#expense-cards-container').empty();
+    matchedExpenses.forEach(expense => {
+      appendExpenseCard(expense);
+    });
+
+  });
+// end of jQuery
+});
 });
