@@ -158,6 +158,11 @@ $(document).ready(function () {
       appendExpenseCard(expense);
     });
 
+    // if all fields are empty, display all expenses again
+    if(!input && !selectedCategory && !startDate && !endDate){
+      loadExpenses();
+    }
+
   });
 // end of jQuery
 });
