@@ -142,28 +142,28 @@ $(document).ready(function () {
     const selectedCategory = document.getElementById('search-category').value;
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
-
+  
     let expenses = JSON.parse(localStorage.getItem('expenses')) || [];
-
+  
     // match id with user search
-    const matchedExpenses = expenses.filter(expense => 
-      expense.title.toLowerCase().includes(input) && (selectedCategory === expense.category)
-      && (!startDate || new Date(expense.date) >= new Date(startDate)) 
-      && (!endDate || new Date(expense.date) <= new Date(endDate))
-    );
-
+    const matchedExpenses = expenses.filter(expense => {
+      const titleMatch = !input || expense.title.toLowerCase().includes(input);
+      const categoryMatch = !selectedCategory || expense.category === selectedCategory;
+      const expenseDate = new Date(expense.date);
+      const startDateMatch = !startDate || expenseDate >= new Date(startDate);
+      const endDateMatch = !endDate || expenseDate <= new Date(endDate);
+  
+      return titleMatch && categoryMatch && startDateMatch && endDateMatch;
+    });
+  
     // clear the expenses container and load only the ones that match the user input
     $('#expense-cards-container').empty();
-    matchedExpenses.forEach(expense => {
-      appendExpenseCard(expense);
-    });
-
-    // if all fields are empty, display all expenses again
-    if(!input && !selectedCategory && !startDate && !endDate){
-      loadExpenses();
+    if (matchedExpenses.length > 0) {
+      matchedExpenses.forEach(expense => {
+        appendExpenseCard(expense);
+      });
+    } else {
+      $('#expense-cards-container').html('<p class="text-muted">No expenses found.</p>');
     }
-
   });
-// end of jQuery
-});
 });
