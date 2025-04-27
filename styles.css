@@ -6,7 +6,7 @@ body {
     font-family: Arial, sans-serif;
   }
   
-  /* Header with Blue Accent */
+  /* Header with Blue */
   header {
     background-color: #fff;
     border-bottom: 2px solid #007bff;
@@ -15,7 +15,7 @@ body {
     color: #007bff;
   }
   
-  /* Navigation Menu Styling */
+  /* Navigation Menu */
   .nav .nav-link {
     color: #555;
   }
@@ -24,19 +24,54 @@ body {
     color: #007bff;
   }
   
-  /* Footer Styling */
+  /* Footer */
   footer {
     background-color: #f8f9fa;
   }
   
-  /* Card Title Accent */
+  /* Card Title */
   .card-title {
     color: #007bff;
   }
   
-  /* Expanded Expense Card Styling */
+  /* Expanded Expense Card */
   .expense-card.expanded {
     position: relative;
     z-index: 10;
     background-color: #f9f9f9;
   }
+
+  /* Search Bar */
+  .search-bar {
+    background-color: #f8f9fa;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .search-bar input {
+    border: none;
+    outline: none;
+  }
+  .search-bar input:focus {
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  .search-bar button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+  }
+  .search-bar button:hover {
+    background-color: #0056b3;
+  }
+
+/* Make an outline-btn look solid when active */
+.btn-outline-primary.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-outline-secondary.active {
+  background-color: #6c757d;
+  color: #fff;
+}
